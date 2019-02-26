@@ -12,7 +12,32 @@ message SumResponse{
     int32 sum_result = 1;
 }
 
+message PrimeNumberDecompositionRequest{
+    int64 number = 1;
+}
+
+message PrimeNumberDecompositionResponse{
+    int64 prime_factor = 1;
+}
+
+
+message SquareRootRequest{
+    int32 number = 1;
+}
+
+message SquareRootResponse{
+    double number_root = 1; 
+}
+
 service CalculatorService{
     //Unary 
     rpc Sum(SumRequest) returns (SumResponse) {};
+
+    //Stream Server
+    rpc PrimeNumberDecomposition(PrimeNumberDecompositionRequest) returns (stream PrimeNumberDecompositionResponse) {};
+
+    // error handling
+    // this RPC will throw an exception if the send number is negative
+    // The error being sent is of type INVALID_ARGUMENT
+    rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
 }
